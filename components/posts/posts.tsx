@@ -1,31 +1,34 @@
 'use client';
 
-import { Post as PostType } from '@/types/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React, { Fragment } from 'react';
-import { getPostsQuery } from '@/utils/get-post-query';
+import { getNewsPageContent } from '@/utils/get-post-query';
 import { Post } from './post';
 
 export const Posts = () => {
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: ['posts'],
-      queryFn: getPostsQuery,
-      getNextPageParam: (_, pages) => pages.length + 1,
-      initialPageParam: 1,
+      queryFn: ({ pageParam }) => {
+        console.log({ pageParam });
+
+        return getNewsPageContent(pageParam, 10);
+      },
+      getNextPageParam: (_, pages) => {
+        return pages.length;
+      },
+      initialPageParam: 0,
     });
 
   if (!data) return <div>Not found</div>;
+  console.log({ data });
 
   return (
     <div className="divide-y">
       {data.pages.map((group, i) => (
         <Fragment key={i}>
-          {group.map((post) => (
-            <Post
-              key={post.id}
-              post={post}
-            />
+          {group.map((post, idx) => (
+            <div key={idx}>{post.title}</div>
           ))}
         </Fragment>
       ))}
