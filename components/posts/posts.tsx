@@ -30,10 +30,10 @@ export const Posts = () => {
     });
 
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, fetchNextPage]);
+  }, [inView, fetchNextPage, hasNextPage]);
 
   if (!data) {
     return <div>Not found</div>;
