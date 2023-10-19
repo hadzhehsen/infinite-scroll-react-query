@@ -1,17 +1,23 @@
-import { cache } from "react";
+import { cache } from 'react';
 
-const FALCONER_ENDPOINT = "https://falconer.haqq.sh";
+const FALCONER_ENDPOINT = 'https://falconer.haqq.sh';
 
-export const getNewsPageContent = cache(async (page = 0, limit = 10) => {
-  console.log("getNewsPageContent", { page, limit });
-
+export const getNewsPageContent = cache(async (page = 0, limit = 20) => {
+  console.log('getNewsPageContent', { page, limit });
   try {
-    const response = await fetch(`${FALCONER_ENDPOINT}/islamic/news`, {
-      method: "POST",
+    const requestURL = new URL(
+      '/photos',
+      'https://jsonplaceholder.typicode.com',
+    );
+    requestURL.searchParams.append('_page', page.toString());
+    requestURL.searchParams.append('_limit', limit.toString());
+
+    const response = await fetch(requestURL, {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ limit, page }),
+      // body: JSON.stringify({ limit, page }),
       next: {
         revalidate: 180,
       },
