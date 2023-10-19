@@ -1,17 +1,17 @@
-import { cache } from 'react';
+import { cache } from "react";
 
-const FALCONER_ENDPOINT = 'https://falconer.haqq.sh';
+const FALCONER_ENDPOINT = "https://falconer.haqq.sh";
 
 export const getNewsPageContent = cache(async (page = 0, limit = 10) => {
-  console.log('getNewsPageContent', { page, limit });
+  console.log("getNewsPageContent", { page, limit });
 
   try {
     const response = await fetch(`${FALCONER_ENDPOINT}/islamic/news`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ page, limit }),
+      body: JSON.stringify({ limit, page }),
       next: {
         revalidate: 180,
       },
@@ -24,5 +24,6 @@ export const getNewsPageContent = cache(async (page = 0, limit = 10) => {
     }
   } catch (error) {
     console.error(error);
+    return;
   }
 });
