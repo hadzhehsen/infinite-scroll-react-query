@@ -58,7 +58,7 @@ export const Posts = () => {
       </div>
       <div
         ref={ref}
-        className="p-6 text-gray-500/50 text-center text-base uppercase"
+        className="p-6 text-gray-700 text-center text-base uppercase"
       >
         Loading more...
       </div>
