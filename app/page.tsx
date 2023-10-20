@@ -1,15 +1,16 @@
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { getQueryClient } from '@/utils/get-query-client';
-import { getNewsPageContent } from '@/utils/get-post-query';
-import { Posts } from '@/components/posts/posts';
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { getQueryClient } from "@/utils/get-query-client";
+import { getNewsPageContent } from "@/utils/get-post-query";
+import { Posts } from "@/components/posts/posts";
+import { NEWS_LIMIT } from "../constants";
 
 export default async function PostsPage() {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ['posts'],
+    queryKey: ["posts"],
     queryFn: ({ pageParam }) => {
-      return getNewsPageContent(pageParam, 10);
+      return getNewsPageContent(pageParam, NEWS_LIMIT);
     },
     initialPageParam: 0,
   });

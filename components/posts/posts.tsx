@@ -5,6 +5,7 @@ import React, { Fragment, useEffect } from "react";
 import { getNewsPageContent } from "@/utils/get-post-query";
 import { Post } from "./post";
 import { useInView } from "react-intersection-observer";
+import { NEWS_LIMIT } from "../../constants";
 
 interface Post {
   title: string;
@@ -21,16 +22,19 @@ export const Posts = () => {
     useInfiniteQuery<Post[], unknown, InfiniteData<Post[]>, ["posts"], number>({
       queryKey: ["posts"],
       queryFn: async ({ pageParam }) => {
-        console.log("queryFn", { pageParam });
-        const response = await getNewsPageContent(pageParam, 10);
-        console.log("queryFn", { response });
-        return response;
+        return await getNewsPageContent(pageParam, NEWS_LIMIT);
       },
-      getNextPageParam: (_, pages) => {
+      getNextPageParam: (latest, pages) => {
+        if (latest.length < NEWS_LIMIT) {
+          return undefined;
+        }
+
         return pages.length;
       },
       initialPageParam: 0,
     });
+
+  console.log({ hasNextPage });
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -49,23 +53,20 @@ export const Posts = () => {
           <Fragment key={i}>
             {posts?.map((post, idx) => (
               <Fragment key={`${i}-${idx}`}>
-                <Post
-                  title={post.title}
-                  thumbnailUrl={post.thumbnailUrl}
-                  id={post.id}
-                  image={post.image.src}
-                />
+                <Post title={post.title} image={post.image} />
               </Fragment>
             ))}
           </Fragment>
         ))}
       </div>
-      <div
-        ref={ref}
-        className="p-6 text-gray-700 text-center text-base uppercase"
-      >
-        Loading more...
-      </div>
+      {hasNextPage && (
+        <div
+          ref={ref}
+          className="p-6 text-gray-700 text-center text-base uppercase"
+        >
+          Loading more...
+        </div>
+      )}
     </div>
   );
 };

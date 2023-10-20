@@ -1,19 +1,18 @@
-import { cache } from 'react';
+import { cache } from "react";
 
-const FALCONER_ENDPOINT = 'https://falconer.haqq.sh';
+const FALCONER_ENDPOINT = "https://falconer.haqq.sh";
 
 export const getNewsPageContent = cache(async (page = 0, limit = 20) => {
   try {
-    const requestURL = new URL('/islamic/news', FALCONER_ENDPOINT);
-    requestURL.searchParams.append('page', page.toString());
-    requestURL.searchParams.append('limit', limit.toString());
+    const requestURL = new URL("/islamic/news", FALCONER_ENDPOINT);
+    requestURL.searchParams.append("page", page.toString());
+    requestURL.searchParams.append("limit", limit.toString());
 
-    const response = await fetch(requestURL.toString(), {
-      method: 'GET',
+    const response = await fetch(requestURL, {
+      method: "get",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      // body: JSON.stringify({ limit, page }),
       next: {
         revalidate: 180,
       },
