@@ -34,8 +34,6 @@ export const Posts = () => {
       initialPageParam: 0,
     });
 
-  console.log({ hasNextPage });
-
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
