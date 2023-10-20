@@ -1,13 +1,13 @@
-import Image from "next/image";
-import React from "react";
+import Image from 'next/image';
+import React from 'react';
 
-export const Post = ({ title, thumbnailUrl, id }: any) => {
+export const Post = ({ title, thumbnailUrl, id, image }: any) => {
   return (
     <div className="p-4 border rounded-xl">
       <div className="flex flex-row gap-4">
         <div className="flex-initial w-[150px]">
           <Image
-            src={thumbnailUrl}
+            src={image}
             alt=""
             height={150}
             width={150}

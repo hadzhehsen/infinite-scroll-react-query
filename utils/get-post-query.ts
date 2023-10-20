@@ -5,12 +5,9 @@ const FALCONER_ENDPOINT = 'https://falconer.haqq.sh';
 export const getNewsPageContent = cache(async (page = 0, limit = 20) => {
   console.log('getNewsPageContent', { page, limit });
   try {
-    const requestURL = new URL(
-      '/photos',
-      'https://jsonplaceholder.typicode.com',
-    );
-    requestURL.searchParams.append('_page', page.toString());
-    requestURL.searchParams.append('_limit', limit.toString());
+    const requestURL = new URL('/islamic/news', FALCONER_ENDPOINT);
+    requestURL.searchParams.append('page', page.toString());
+    requestURL.searchParams.append('limit', limit.toString());
 
     const response = await fetch(requestURL, {
       method: 'GET',
