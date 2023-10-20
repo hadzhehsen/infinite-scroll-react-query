@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
-import React, { Fragment, useEffect } from 'react';
-import { getNewsPageContent } from '@/utils/get-post-query';
-import { Post } from './post';
-import { useInView } from 'react-intersection-observer';
+import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
+import React, { Fragment, useEffect } from "react";
+import { getNewsPageContent } from "@/utils/get-post-query";
+import { Post } from "./post";
+import { useInView } from "react-intersection-observer";
 
 interface Post {
   title: string;
@@ -18,12 +18,12 @@ interface Post {
 export const Posts = () => {
   const { ref, inView } = useInView();
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
-    useInfiniteQuery<Post[], unknown, InfiniteData<Post[]>, ['posts'], number>({
-      queryKey: ['posts'],
+    useInfiniteQuery<Post[], unknown, InfiniteData<Post[]>, ["posts"], number>({
+      queryKey: ["posts"],
       queryFn: async ({ pageParam }) => {
-        console.log('queryFn', { pageParam });
+        console.log("queryFn", { pageParam });
         const response = await getNewsPageContent(pageParam, 10);
-        console.log('queryFn', { response });
+        console.log("queryFn", { response });
         return response;
       },
       getNextPageParam: (_, pages) => {
