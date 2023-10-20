@@ -27,7 +27,7 @@ export const Posts = () => {
         return response;
       },
       getNextPageParam: (_, pages) => {
-        return pages.length + 1;
+        return pages.length;
       },
       initialPageParam: 0,
     });
