@@ -9,12 +9,14 @@ import { NEWS_LIMIT } from "../../constants";
 import Link from "next/link";
 
 interface Post {
-  title: string;
-  thumbnailUrl: string;
-  id: number;
-  image: {
-    src: string;
+  name: string;
+  slug: string;
+  _uid: string;
+  content: {
+    content: string;
+    image: string;
   };
+  first_published_at: string;
 }
 
 export const Posts = () => {

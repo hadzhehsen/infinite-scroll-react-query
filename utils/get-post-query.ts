@@ -57,8 +57,7 @@ export const getPosts = cache(async (page = 0, limit = NEWS_LIMIT) => {
 
     return response.data.stories;
   } catch (error) {
-    console.error(error);
-    throw new Error(error.message);
+    console.error((error as Error).message);
   }
 });
 export const getPost = cache(async (slug: string) => {
@@ -79,7 +78,6 @@ export const getPost = cache(async (slug: string) => {
 
     return response.data.story;
   } catch (error) {
-    console.error(error);
-    throw new Error(error.message);
+    console.error((error as Error).message);
   }
 });

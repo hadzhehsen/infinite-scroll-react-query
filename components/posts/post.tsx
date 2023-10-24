@@ -11,9 +11,8 @@ export const Post = ({ title, image, date }: any) => {
             <div className="relative h-[250px] w-full overflow-hidden rounded-[12px] border-[1px] border-[#2F2F2F]">
               <Image
                 src={image}
-                // width={image.width}
-                // height={image.height}
-                fill
+                width={250}
+                height={250}
                 alt=""
                 className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-110"
                 loading="lazy"
