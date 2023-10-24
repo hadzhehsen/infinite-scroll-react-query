@@ -4,6 +4,9 @@ import { getPosts } from "@/utils/get-post-query";
 import { Posts } from "@/components/posts/posts";
 import { NEWS_LIMIT } from "../../constants";
 
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+
 export default async function PostsPage() {
   const queryClient = getQueryClient();
 

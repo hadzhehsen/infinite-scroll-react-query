@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { formatDate } from "../../utils/format-date";
 
 export const Post = ({ title, image, date }: any) => {
   return (
@@ -22,13 +23,9 @@ export const Post = ({ title, image, date }: any) => {
         </div>
         <div className="flex-1 flex flex-col gap-1">
           <div>
-          
-          <h3 className="text-lg line-clamp-2 leading-[30px]">{title}</h3>
-
+            <h3 className="text-lg line-clamp-2 leading-[30px]">{title}</h3>
           </div>
-          <div>
-            {(date as Date).toLocaleString()}
-          </div>
+          <div>{formatDate(new Date(date))}</div>
         </div>
       </div>
     </div>

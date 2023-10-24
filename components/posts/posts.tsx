@@ -2,7 +2,7 @@
 
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import React, { Fragment, useEffect } from "react";
-import { getPersonalNews } from "@/utils/get-post-query";
+import { getPosts } from "@/utils/get-post-query";
 import { Post } from "./post";
 import { useInView } from "react-intersection-observer";
 import { NEWS_LIMIT } from "../../constants";
@@ -23,7 +23,7 @@ export const Posts = () => {
     useInfiniteQuery<Post[], unknown, InfiniteData<Post[]>, ["posts"], number>({
       queryKey: ["posts"],
       queryFn: async ({ pageParam }) => {
-        return await getPersonalNews(pageParam, NEWS_LIMIT);
+        return await getPosts(pageParam, NEWS_LIMIT);
       },
       getNextPageParam: (latest, pages) => {
         if (latest.length < NEWS_LIMIT) {
@@ -51,13 +51,12 @@ export const Posts = () => {
         {data.pages.map((posts, i) => (
           <Fragment key={i}>
             {posts?.map((post) => {
-              console.log({ post });
               return (
                 <Link href={`/news/${post.slug}`} key={post._uid}>
                   <Post
                     title={post.name}
                     image={post.content.image}
-                    date={new Date(post.first_published_at)}
+                    date={post.first_published_at}
                   />
                 </Link>
               );
@@ -65,14 +64,14 @@ export const Posts = () => {
           </Fragment>
         ))}
       </div>
-      {/* {hasNextPage && (
+      {hasNextPage && (
         <div
           ref={ref}
           className="p-6 text-gray-700 text-center text-base uppercase"
         >
           Loading more...
         </div>
-      )} */}
+      )}
     </div>
   );
 };

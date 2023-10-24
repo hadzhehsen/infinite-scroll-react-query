@@ -54,9 +54,7 @@ export const getPosts = cache(async (page = 0, limit = NEWS_LIMIT) => {
       per_page: limit,
       starts_with: "news",
     });
-    console.log({
-      response: response.data.stories,
-    });
+
     return response.data.stories;
   } catch (error) {
     console.error(error);
