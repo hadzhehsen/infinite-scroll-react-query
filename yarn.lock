@@ -192,13 +192,6 @@
   dependencies:
     storyblok-js-client "^5.14.2"
 
-"@storyblok/react@^2.4.7":
-  version "2.4.7"
-  resolved "https://registry.npmjs.org/@storyblok/react/-/react-2.4.7.tgz"
-  integrity sha512-maEEoupuLvKmxaZz1CFAn7jnNXL9y14zyr+9UqbP/btiahp9ZSX5JMuDRBRscfQ6UMjmbd+ijdnl1BgFkAZfwA==
-  dependencies:
-    "@storyblok/js" "^2.3.0"
-
 "@swc/helpers@0.5.2":
   version "0.5.2"
   resolved "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.2.tgz"

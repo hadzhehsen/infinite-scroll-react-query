@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
-import React, { Fragment, useEffect } from 'react';
-import { getNewsPageContent } from '@/utils/get-post-query';
-import { Post } from './post';
-import { useInView } from 'react-intersection-observer';
-import { NEWS_LIMIT } from '../../constants';
-import Link from 'next/link';
+import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
+import React, { Fragment, useEffect } from "react";
+import { getPersonalNews } from "@/utils/get-post-query";
+import { Post } from "./post";
+import { useInView } from "react-intersection-observer";
+import { NEWS_LIMIT } from "../../constants";
+import Link from "next/link";
 
 interface Post {
   title: string;
@@ -20,10 +20,10 @@ interface Post {
 export const Posts = () => {
   const { ref, inView } = useInView();
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
-    useInfiniteQuery<Post[], unknown, InfiniteData<Post[]>, ['posts'], number>({
-      queryKey: ['posts'],
+    useInfiniteQuery<Post[], unknown, InfiniteData<Post[]>, ["posts"], number>({
+      queryKey: ["posts"],
       queryFn: async ({ pageParam }) => {
-        return await getNewsPageContent(pageParam, NEWS_LIMIT);
+        return await getPersonalNews(pageParam, NEWS_LIMIT);
       },
       getNextPageParam: (latest, pages) => {
         if (latest.length < NEWS_LIMIT) {
@@ -46,32 +46,33 @@ export const Posts = () => {
   }
 
   return (
-    <div className="container mx-auto py-4">
+    <div className="container mx-auto py-4 px-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 p-4">
         {data.pages.map((posts, i) => (
           <Fragment key={i}>
-            {posts?.map((post, idx) => (
-              <Link
-                href={`/${i}${idx}`}
-                key={`${i}-${idx}`}
-              >
-                <Post
-                  title={post.title}
-                  image={post.image}
-                />
-              </Link>
-            ))}
+            {posts?.map((post) => {
+              console.log({ post });
+              return (
+                <Link href={`/news/${post.slug}`} key={post._uid}>
+                  <Post
+                    title={post.name}
+                    image={post.content.image}
+                    date={new Date(post.first_published_at)}
+                  />
+                </Link>
+              );
+            })}
           </Fragment>
         ))}
       </div>
-      {hasNextPage && (
+      {/* {hasNextPage && (
         <div
           ref={ref}
           className="p-6 text-gray-700 text-center text-base uppercase"
         >
           Loading more...
         </div>
-      )}
+      )} */}
     </div>
   );
 };
